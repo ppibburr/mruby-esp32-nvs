@@ -1,28 +1,13 @@
-mruby-esp32-loop
+mruby-esp32-nvs
 ============
-
-event loop for mruby-esp32.
-
-## Installation
-Add the line below to your `build_config.rb`:
+wrapper to NVS library on ESP32
 
 ```ruby
-  conf.gem :github => 'ppibburr/mruby-esp32-loop'
-```
+ESP::NVS.init
+nvs = ESP::NVS.new("foo-namespace", ESP32::NVS::READ_WRITE)
 
-## Example
-```ruby
-cnt = 0
-
-ESP32.interval 50000 do
-  print "Timeout: Count is #{cnt}"
-  
-  true
-end
-
-ESP32.main do
-  cnt += 1
-end
+nvs["key-name"] = 1979  #=> 1979  # aka nvs.set_numeric("key-name", 1979, ESP32::INT32)
+nvs["key-name"] == 1979 #=> true; # aka nvs.get_numeric("key-name", ESP32::INT32)
 ```
 
 Permission is hereby granted, free of charge, to any person obtaining a 
